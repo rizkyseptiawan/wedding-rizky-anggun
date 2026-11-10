@@ -1,0 +1,17 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Raw Photos Archive (source files)
+A&R/
+
+# Python / Tools scratch
+__pycache__/
+*.pyc
+
+# Logs & scratch
+*.log
+scratch/
+test_*.png
+test_*.js

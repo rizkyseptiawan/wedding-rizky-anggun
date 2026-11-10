@@ -530,6 +530,135 @@ section.footnote-wrap .footnote-body .bottom-text,
     background-color: #4a512d !important;
     transform: translateY(-2px);
 }
+
+/* ==========================================================================
+   LOVE STORY MOBILE RESPONSIVENESS & TOUCH SWIPE CONTROLS
+   ========================================================================== */
+@media (max-width: 960px) {
+    .love-story-outer,
+    .ls-runway {
+        background-color: var(--background-secondary, #353a20) !important;
+        height: auto !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    section.love-story {
+        background-color: var(--background-secondary, #353a20) !important;
+    }
+    section.love-story.ls-sticky {
+        position: relative !important;
+        top: auto !important;
+        min-height: auto !important;
+        padding-bottom: 28px !important;
+    }
+    .story-body {
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: pan-y;
+    }
+    .story-item-wrapper {
+        margin-bottom: 0 !important;
+        padding-bottom: 12px !important;
+    }
+    .ls-mobile-controls-wrap {
+        position: relative;
+        z-index: 10;
+        margin-top: 22px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        padding: 0 10px;
+    }
+    .ls-mobile-nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+    }
+    .ls-nav-btn {
+        background: rgba(245, 240, 232, 0.15);
+        border: 1px solid rgba(245, 240, 232, 0.35);
+        color: #f5f0e8;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        font-size: 24px;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        touch-action: manipulation;
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+    }
+    .ls-nav-btn:active {
+        background: rgba(245, 240, 232, 0.35);
+        transform: scale(0.92);
+    }
+    .ls-nav-btn.disabled,
+    .ls-nav-btn:disabled {
+        opacity: 0.25;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+    .ls-mobile-dots {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: 250px;
+    }
+    .ls-dot {
+        background: rgba(245, 240, 232, 0.15);
+        border: 1px solid rgba(245, 240, 232, 0.25);
+        color: rgba(245, 240, 232, 0.75);
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 11px;
+        font-family: inherit;
+        letter-spacing: 0.3px;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        touch-action: manipulation;
+    }
+    .ls-dot.active {
+        background: #f5f0e8;
+        color: #353a20;
+        font-weight: 700;
+        border-color: #f5f0e8;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+        transform: scale(1.06);
+    }
+    .ls-swipe-hint {
+        color: rgba(245, 240, 232, 0.65);
+        font-size: 11px;
+        letter-spacing: 0.5px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        animation: pulseHint 2.4s infinite ease-in-out;
+    }
+    @keyframes pulseHint {
+        0%, 100% { opacity: 0.55; transform: scale(1); }
+        50% { opacity: 0.95; transform: scale(1.02); }
+    }
+    .save-date-wrap {
+        margin-top: 0 !important;
+        padding-top: 8% !important;
+    }
+}
+@media (min-width: 961px) {
+    .ls-mobile-controls-wrap {
+        display: none !important;
+    }
+}
 </style>
 
 </head>

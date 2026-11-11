@@ -2341,28 +2341,25 @@ section.footnote-wrap .footnote-body .bottom-text,
 (function() {
     console.log("[Wedding] Initializing static wedding invitation enhancements...");
 
-    // 1. Audio object
-    var audio = new Audio('assets/audio/wedding-song.mp3');
-    audio.loop = true;
-    window.weddingAudio = audio;
-    var isPlaying = false;
+    // 1. Audio controls (reuse singleton AudioManager from ce80ec_4f4a06b1.js)
+    try {
+        Object.defineProperty(window, 'weddingAudio', {
+            configurable: true,
+            get: function() {
+                return window.audioControls && window.audioControls.state
+                    ? window.audioControls.state.backgroundMusic
+                    : null;
+            }
+        });
+    } catch (e) {}
 
     window.toggleWeddingAudio = function() {
-        if (isPlaying) {
-            audio.pause();
-            isPlaying = false;
-            document.querySelectorAll('#music-box, .music-box').forEach(function(b) {
-                b.classList.remove('playing', 'auto');
-            });
-        } else {
-            audio.play().then(function() {
-                isPlaying = true;
-                document.querySelectorAll('#music-box, .music-box').forEach(function(b) {
-                    b.classList.add('playing');
-                });
-            }).catch(function(e) {
-                console.log('Audio autoplay blocked:', e);
-            });
+        var ctrl = window.audioControls;
+        if (!ctrl) return;
+        if (typeof ctrl.isPlaying === 'function' && ctrl.isPlaying()) {
+            ctrl.pause();
+        } else if (typeof ctrl.play === 'function') {
+            ctrl.play();
         }
     };
 
@@ -2414,15 +2411,12 @@ section.footnote-wrap .footnote-body .bottom-text,
             try { window.scrollLock.disable(); } catch(e) {}
         }
 
-        // D. Play audio
-        audio.play().then(function() {
-            isPlaying = true;
-            document.querySelectorAll('#music-box, .music-box').forEach(function(b) {
-                b.classList.add('playing');
-            });
-        }).catch(function(err) {
-            console.log('Audio autoplay gesture waiting:', err);
-        });
+        // D. Play singleton background music via AudioManager
+        if (typeof window.playMusicOnce === 'function') {
+            window.playMusicOnce();
+        } else if (window.audioControls && typeof window.audioControls.play === 'function' && !window.audioControls.isPlaying()) {
+            window.audioControls.play();
+        }
 
         // E. Smoothly scroll into main content
         setTimeout(function() {
@@ -2477,14 +2471,6 @@ section.footnote-wrap .footnote-body .bottom-text,
             window.openWeddingInvitation();
         });
     }
-
-    // Toggle music
-    document.addEventListener('click', function(e) {
-        if (e.target.closest('#music-box, .music-box')) {
-            e.preventDefault();
-            window.toggleWeddingAudio();
-        }
-    });
 
     // 3. Dynamic guest name (?to=... or ?u=...)
     function applyGuestName() {

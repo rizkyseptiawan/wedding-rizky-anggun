@@ -191,7 +191,7 @@ function adjustContainerHeight(){document.querySelectorAll(".sticky-bg-container
         var yearMatch=item.subtitle.match(/\b(20\d\d)\b/);
         var label=yearMatch?yearMatch[1]:(idx+1);
         dot.innerHTML="<span>"+label+"</span>";
-        dot.setAttribute("aria-label","Menuju tahun "+label);
+        dot.setAttribute("aria-label",yearMatch?("Menuju tahun "+label):("Menuju cerita "+label));
         dot.addEventListener("click",function(ev){
             ev.preventDefault();
             ev.stopPropagation();
